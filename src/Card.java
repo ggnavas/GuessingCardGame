@@ -1,11 +1,5 @@
 import java.awt.image.BufferedImage;
 
-/*
-   An object of class card represents one of the 52 cards in a
-   standard deck of playing cards.  Each card has a suit and
-   a value.
-*/
-
 public class Card {
 
 	public final static int SPADES = 0, // Codes for the 4 suits.
@@ -43,10 +37,12 @@ public class Card {
 		return value;
 	}
 
+	// returns the rank for the card object
 	public int getRank() {
 		return (getSuit() * 13) + getValue();
 	}
 
+	// return the image for the card object
 	public BufferedImage getCardImage() {
 
 		return cardImage;

@@ -20,6 +20,7 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 
 	public DeckOfCards deck;
 
+	// for the GUI
 	Card backCard = new Card(100, 100, ImageIO.read(new File("images/b.gif")));
 	JFrame window = new JFrame("Card Game!");
 	JButton button = new JButton("Deal");
@@ -33,16 +34,18 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 	JComboBox suitSelection;
 	JComboBox valueSelection;
 
-	int suit = 0;
-	int value = 1;
-	int nextCard = 0;
-	int userCardRank = 1;
-	int win = 0;
-	int loss = 0;
-	int rmngCards = 52;
+	// for the game logic
+	int suit = 0; // user card suit
+	int value = 1; // user card value
+	int nextCard = 0; // to switch to next card on deck
+	int userCardRank = 1; // the rank of the user card
+	int win = 0; // number of times the cards match
+	int loss = 0; // number of times the cards don't match
+	int rmngCards = 52; // total number of remaining cards
 
 	public CardGuessingGame() throws IOException {
 
+		// instantiating the deck array
 		deck = new DeckOfCards();
 
 		// shuffle deck
@@ -52,7 +55,6 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 		System.out.println(DeckOfCards.deck[nextCard].getRank());
 		System.out.println(DeckOfCards.deck[nextCard].toString());
 
-		window.setSize(1250, 1000);
 		((JFrame) window).setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		button.addActionListener(this);
 		button.setSize(300, 400);
@@ -67,21 +69,24 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 		imgIcon = new ImageIcon();
 		cardImage = new JLabel(imgIcon);
 
+		// creating label for the game stats
 		gameStats = new JLabel("<html>Welcome!<br>" + "Wins: " + win + "<br> Loss: " + loss + "<br>Cards Left: "
 				+ rmngCards + "</html>");
 
+		// combo box for user card suits
 		JLabel suitLabel = new JLabel("Pick Your Suit");
 		String[] suits = { "Spades", "Hearts", "Diamonds", "Clubs" };
 		suitSelection = new JComboBox(suits);
 
+		// combo box for user card value
 		JLabel valueLabel = new JLabel("Pick Your Value");
 		String[] value = { "Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King" };
 		valueSelection = new JComboBox(value);
 
+		// adding event listeners to combo box
 		suitSelection.addItemListener(this);
 		suitPanel.add(suitLabel);
 		suitPanel.add(suitSelection);
-
 		valueSelection.addItemListener(this);
 		valuePanel.add(valueLabel);
 		valuePanel.add(valueSelection);
@@ -93,6 +98,8 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 		contentPane.add(valuePanel);
 		contentPane.add(suitPanel);
 		contentPane.add(button);
+
+		// adding main panel to window frame
 		window.add(contentPane, BorderLayout.CENTER);
 		window.pack();
 		window.setVisible(true);
@@ -105,12 +112,15 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 
 	}
 
+	// when button is clicked
+	// compare user card to top card on deck
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		imgIcon.setImage(DeckOfCards.deck[nextCard].getCardImage());
 		cardImage.repaint();
 
+		// if the cards match
 		if (DeckOfCards.deck[nextCard].getRank() == userCardRank) {
 
 			System.out.println("you got it");
@@ -118,6 +128,7 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 			win++;
 		}
 
+		// if the cards don't match
 		else {
 			System.out.println("wrong");
 			rmngCards--;
@@ -129,6 +140,7 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 		nextCard++;
 	}
 
+	// getting the user card
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 
@@ -137,5 +149,4 @@ public class CardGuessingGame implements ActionListener, ItemListener {
 
 		userCardRank = (suit * 13) + value;
 	}
-
 }

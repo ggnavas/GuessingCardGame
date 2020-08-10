@@ -9,15 +9,17 @@ public class DeckOfCards {
 
 	public DeckOfCards() throws IOException {
 
+		// create deck array for card objects
 		deck = new Card[52];
 
 		int deckNum = 0;
 		int deckImage = 1;
 
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++) { // runs through 4 times for the number of suits
 
-			for (int j = 1; j < 14; j++) {
+			for (int j = 1; j < 14; j++) { // runs 13 times for the value of cards
 
+				// creation of the card object
 				deck[deckNum] = new Card(j, i, ImageIO.read(new File("images/" + deckImage + ".gif")));
 				deckNum++;
 				deckImage++;
@@ -25,6 +27,7 @@ public class DeckOfCards {
 		}
 	}
 
+	// shuffle method for shuffling the deck
 	public void shuffle() {
 
 		int deckLength = deck.length - 1;
@@ -37,6 +40,7 @@ public class DeckOfCards {
 		}
 	}
 
+	// method for dealing the top card in the deck
 	public int dealTopCard() {
 		int topCard = -1;
 
